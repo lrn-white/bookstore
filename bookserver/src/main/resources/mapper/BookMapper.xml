@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liu.bookserver.dao.BookDao">
+    <resultMap id="BaseResultMap" type="com.liu.bookserver.model.Book">
+        <id column="rowid" property="rowid" jdbcType="INTEGER"/>
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="bname" property="bname" jdbcType="VARCHAR"/>
+        <result column="author" property="author" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--新增书籍信息-->
+    <insert id="addBook">
+        INSERT INTO book
+        (id,bname,author)
+        VALUES
+        (#{id},#{bname},#{author})
+    </insert>
+
+    <!--编辑书籍信息-->
+    <update id="editBook" parameterType="com.liu.bookserver.model.Book">
+        UPDATE book
+        <set>
+            <if test="bname != null and bname != ''">
+                bname = #{bname},
+            </if>
+            <if test="author != null and author != ''">
+                author = #{author}
+            </if>
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+
+    <select id="getBook" resultMap="BaseResultMap">
+        SELECT id,rowid,bname,author
+        FROM book
+        WHERE
+        <if test="id != null and id != ''">
+            id = #{id}
+        </if>
+        <if test="author != null and author != ''">
+            author = #{author}
+        </if>
+        <if test="bname != null and bname != ''">
+            bname = #{bname}
+        </if>
+    </select>
+</mapper>

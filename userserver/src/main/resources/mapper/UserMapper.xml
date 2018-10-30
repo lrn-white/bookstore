@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liu.userserver.dao.UserDao">
+    <resultMap id="BaseResultMap" type="com.liu.userserver.model.OrgUser">
+        <id column="rowid" property="rowid" jdbcType="INTEGER"/>
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="uname" property="uname" jdbcType="VARCHAR"/>
+        <result column="upassword" property="upassword" jdbcType="VARCHAR"/>
+        <result column="isadmin" property="isadmin" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--新增用户信息-->
+    <insert id="addUser">
+        INSERT INTO org_user
+        (id,uname,upassword)
+        VALUE
+        (#{id},#{uname},#{upassword})
+    </insert>
+
+    <!--根据id修改用户信息-->
+    <update id="editUser">
+        UPDATE org_user
+        <set>
+            uname = #{uname},
+            upassword = #{upassword}
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+
+    <!--根据id获取某一用户信息-->
+    <select id="getUser" resultMap="BaseResultMap">
+        SELECT id,rowid,uname,upassword,isadmin
+        FROM org_user
+        WHERE
+        id = #{id}
+    </select>
+
+    <!--根据id修改用户是否为管理员-->
+    <update id="chooseAdmin">
+        UPDATE org_user
+        <set>
+            isadmin = "1"
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+</mapper>
