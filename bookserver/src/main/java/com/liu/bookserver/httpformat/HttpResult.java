@@ -8,6 +8,8 @@ package com.liu.bookserver.httpformat;
  */
 public class HttpResult extends AbstractHttpResult {
 
+    public HttpResult(){}
+
     /**
      * 输出模板
      * @param success 成功

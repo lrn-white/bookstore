@@ -3,6 +3,7 @@ package com.liu.bookserver.model;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 /**
  * @author lrn

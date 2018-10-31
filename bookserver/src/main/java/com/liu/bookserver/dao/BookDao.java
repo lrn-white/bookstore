@@ -1,6 +1,7 @@
 package com.liu.bookserver.dao;
 
 import com.liu.bookserver.model.Book;
+import com.liu.bookserver.model.BookShelf;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

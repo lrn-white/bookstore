@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liu.bookserver.dao.BookShelfDao">
+    <resultMap id="BaseResultMap" type="com.liu.bookserver.model.BookShelf">
+        <id column="rowid" property="rowid" jdbcType="INTEGER"/>
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="userid" property="userid" jdbcType="VARCHAR"/>
+        <result column="bookid" property="bookid" jdbcType="VARCHAR"/>
+        <result column="uname" property="uname" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--添加书籍收藏-->
+    <insert id="addCollection">
+        INSERT INTO bookshelf
+        (id, userid, bookid, uname)
+        VALUES
+            (#{id}, #{userid}, #{bookid}, #{uname})
+    </insert>
+
+    <!--移除书籍收藏-->
+    <delete id="delCollection">
+        DELETE FROM bookshelf
+        WHERE
+        userid = #{userid} and bookid = #{bookid}
+    </delete>
+</mapper>

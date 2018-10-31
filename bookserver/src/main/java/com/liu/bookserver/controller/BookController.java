@@ -6,6 +6,7 @@ import com.liu.bookserver.model.Book;
 import com.liu.bookserver.model.add;
 import com.liu.bookserver.model.edit;
 import com.liu.bookserver.service.BookService;
+import com.netflix.ribbon.proxy.annotation.Http;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.BindingResult;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.constraints.NotBlank;
+import java.io.IOException;
 
 /**
  * @author lrn
@@ -76,5 +80,35 @@ public class BookController {
     @GetMapping("/getBook")
     private HttpResult getBook(Book book) {
         return bookService.getBook(book);
+    }
+
+    /**
+     * 添加书籍收藏
+     *
+     * @param userid 用户id
+     * @param bookid 书籍id
+     * @return
+     * @author : lrn
+     * @createTime : 2018/10/30 10:04
+     */
+    @PostMapping("/addCollection")
+    private HttpResult addCollection(@NotBlank(message = "userid不能为空") String userid,
+                                     @NotBlank(message = "bookid不能为空") String bookid) throws IOException {
+        return bookService.addCollection(userid, bookid);
+    }
+
+    /**
+     * 移除书籍收藏
+     *
+     * @param userid 用户id
+     * @param bookid 书籍id
+     * @return
+     * @author : lrn
+     * @createTime : 2018/10/30 14:14
+     */
+    @PostMapping("/delCollection")
+    private HttpResult delCollection(@NotBlank(message = "userid不能为空") String userid,
+                                     @NotBlank(message = "bookid不能为空") String bookid) {
+        return bookService.delCollection(userid, bookid);
     }
 }
