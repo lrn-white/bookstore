@@ -4,11 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonArrayFormatVisitor;
 import com.liu.bookserver.dao.BookDao;
 import com.liu.bookserver.dao.BookShelfDao;
+import com.liu.bookserver.dao.ChapterDao;
 import com.liu.bookserver.httpformat.AbstractHttpResult;
 import com.liu.bookserver.httpformat.HttpResult;
 import com.liu.bookserver.httpformat.MsgEnum;
 import com.liu.bookserver.model.Book;
 import com.liu.bookserver.model.BookShelf;
+import com.liu.bookserver.model.Chapter;
 import com.liu.bookserver.model.OrgUser;
 import com.liu.bookserver.service.BookService;
 import com.liu.bookserver.utils.UUIDTool;
@@ -32,6 +34,8 @@ public class BookServiceImpl implements BookService {
     private UserServiceServer userServiceServer;
     @Autowired
     private BookShelfDao bookShelfDao;
+    @Autowired
+    private ChapterDao chapterDao;
 
     @Override
     public HttpResult addBook(Book book) {
@@ -75,11 +79,36 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public HttpResult delCollection(String userid, String bookid) {
-        BookShelf bookShelf = new BookShelf();
-        bookShelf.setBookid(bookid);
-        bookShelf.setUserid(userid);
-        int flag = bookShelfDao.delCollection(bookShelf);
+    public HttpResult delCollection(String id) {
+        int flag = bookShelfDao.delCollection(id);
+        if (flag == 0){
+            return HttpResult.fail(MsgEnum.DATA_DELETE_FAILURE);
+        }
+        return HttpResult.success(MsgEnum.DATA_DELETE_SUCCESS);
+    }
+
+    @Override
+    public HttpResult addChapter(Chapter chapter) {
+        chapter.setId(UUIDTool.getUUID());
+        int flag = chapterDao.addChapter(chapter);
+        if (flag == 0){
+            return HttpResult.fail(MsgEnum.DATA_ADD_FAILURE);
+        }
+        return HttpResult.success(MsgEnum.DATA_ADD_SUCCESS);
+    }
+
+    @Override
+    public HttpResult editChapter(Chapter chapter) {
+        int flag = chapterDao.editChapter(chapter);
+        if (flag == 0){
+            return HttpResult.fail(MsgEnum.DATA_UPDATE_FAILURE);
+        }
+        return HttpResult.success(MsgEnum.DATA_UPDATE_SUCCESS);
+    }
+
+    @Override
+    public HttpResult delChapter(String id) {
+        int flag = chapterDao.delChapter(id);
         if (flag == 0){
             return HttpResult.fail(MsgEnum.DATA_DELETE_FAILURE);
         }

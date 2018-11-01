@@ -21,6 +21,6 @@
     <delete id="delCollection">
         DELETE FROM bookshelf
         WHERE
-        userid = #{userid} and bookid = #{bookid}
+        id = #{id}
     </delete>
 </mapper>

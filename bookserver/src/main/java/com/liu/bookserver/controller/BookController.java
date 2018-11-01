@@ -3,6 +3,7 @@ package com.liu.bookserver.controller;
 import com.liu.bookserver.httpformat.HttpResult;
 import com.liu.bookserver.httpformat.MsgEnum;
 import com.liu.bookserver.model.Book;
+import com.liu.bookserver.model.Chapter;
 import com.liu.bookserver.model.add;
 import com.liu.bookserver.model.edit;
 import com.liu.bookserver.service.BookService;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotBlank;
+import javax.ws.rs.POST;
 import java.io.IOException;
 
 /**
@@ -100,15 +102,60 @@ public class BookController {
     /**
      * 移除书籍收藏
      *
-     * @param userid 用户id
-     * @param bookid 书籍id
+     * @param id 收藏id
      * @return
      * @author : lrn
      * @createTime : 2018/10/30 14:14
      */
+
     @PostMapping("/delCollection")
-    private HttpResult delCollection(@NotBlank(message = "userid不能为空") String userid,
-                                     @NotBlank(message = "bookid不能为空") String bookid) {
-        return bookService.delCollection(userid, bookid);
+    private HttpResult delCollection(@NotBlank(message = "userid不能为空") String id) {
+        return bookService.delCollection(id);
+    }
+
+    /**
+     * 添加章节信息
+     * @author : lrn
+     * @createTime : 2018/10/31 17:19
+     * @param chapter bookid 书籍id
+     * @param chapter cname 章节名
+     * @param chapter cprice 章节单价
+     * @return
+     */
+    @PostMapping("/addChapter")
+    private HttpResult addChapter(@Validated({add.class}) Chapter chapter,BindingResult result){
+        if (result.hasErrors()) {
+            return HttpResult.fail(result.getFieldError().getDefaultMessage());
+        }
+        return bookService.addChapter(chapter);
+    }
+
+    /**
+     * 修改章节信息
+     * @author : lrn
+     * @createTime : 2018/10/31 17:29
+     * @param chapter id 章节id
+     * @param chapter cname 章节名
+     * @param chapter cprice 单价
+     * @return
+     */
+    @PostMapping("/editChapter")
+    private HttpResult editChapter(@Validated({edit.class}) Chapter chapter,BindingResult result){
+        if (result.hasErrors()) {
+            return HttpResult.fail(result.getFieldError().getDefaultMessage());
+        }
+        return bookService.editChapter(chapter);
+    }
+
+    /**
+     * 删除章节信息
+     * @author : lrn
+     * @createTime : 2018/10/31 19:33
+     * @param id 章节id
+     * @return       
+     */
+    @GetMapping("/delChapter")
+    private HttpResult delChapter(@NotBlank(message = "id不能为空") String id){
+        return bookService.delChapter(id);
     }
 }

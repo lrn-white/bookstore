@@ -25,11 +25,10 @@ public interface BookShelfDao {
     /**
      * 移除书籍收藏
      *
-     * @param bookShelf userid 用户id
-     * @param bookShelf bookid 书籍id
+     * @param id 收藏id
      * @return
      * @author : lrn
      * @createTime : 2018/10/30 14:14
      */
-    int delCollection(BookShelf bookShelf);
+    int delCollection(String id);
 }
