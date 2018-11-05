@@ -4,6 +4,8 @@ import com.liu.bookserver.model.Book;
 import com.liu.bookserver.model.BookShelf;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @author lrn
  * @createTime : 2018/10/29 16:48
@@ -45,5 +47,5 @@ public interface BookDao {
      * @author : lrn
      * @createTime : 2018/10/30 8:51
      */
-    Book getBook(Book book);
+    List<Book> getBook(Book book);
 }

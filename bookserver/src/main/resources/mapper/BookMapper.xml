@@ -11,9 +11,9 @@
     <!--新增书籍信息-->
     <insert id="addBook">
         INSERT INTO book
-        (id,bname,author)
+        (id, bname, author)
         VALUES
-        (#{id},#{bname},#{author})
+            (#{id}, #{bname}, #{author})
     </insert>
 
     <!--编辑书籍信息-->
@@ -31,18 +31,20 @@
         id = #{id}
     </update>
 
-    <select id="getBook" resultMap="BaseResultMap">
+    <!--获取的单一书籍信息-->
+    <select id="getBook" resultMap="BaseResultMap" resultType="java.util.ArrayList">
         SELECT id,rowid,bname,author
         FROM book
-        WHERE
-        <if test="id != null and id != ''">
-            id = #{id}
-        </if>
-        <if test="author != null and author != ''">
-            author = #{author}
-        </if>
-        <if test="bname != null and bname != ''">
-            bname = #{bname}
-        </if>
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="author != null and author != ''">
+                and author LIKE CONCAT ('%', #{author},'%')
+            </if>
+            <if test="bname != null and bname != ''">
+                and bname LIKE CONCAT ('%', #{bname},'%')
+            </if>
+        </where>
     </select>
 </mapper>

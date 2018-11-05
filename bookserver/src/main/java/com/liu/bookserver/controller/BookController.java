@@ -68,7 +68,7 @@ public class BookController {
     }
 
     /**
-     * 获取单一书籍信息
+     * 获取书籍信息
      *
      * @param book id id
      * @param book bname 书籍名

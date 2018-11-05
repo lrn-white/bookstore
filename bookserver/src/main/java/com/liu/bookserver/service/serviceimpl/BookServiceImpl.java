@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,7 +59,12 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public HttpResult getBook(Book book) {
-        return HttpResult.success(MsgEnum.DATA_SELECT_SUCCESS, bookDao.getBook(book));
+        long startTime=System.currentTimeMillis();
+        List<Book> books = bookDao.getBook(book);
+        long endTime=System.currentTimeMillis();
+        float excTime=(float)(endTime-startTime);
+        System.out.println(excTime);
+        return HttpResult.success(MsgEnum.DATA_SELECT_SUCCESS, books);
     }
 
     @Override
