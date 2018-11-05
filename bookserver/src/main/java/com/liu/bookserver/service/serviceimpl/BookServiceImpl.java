@@ -5,13 +5,11 @@ import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonArrayFormatVisitor;
 import com.liu.bookserver.dao.BookDao;
 import com.liu.bookserver.dao.BookShelfDao;
 import com.liu.bookserver.dao.ChapterDao;
+import com.liu.bookserver.dao.ReadRecordDao;
 import com.liu.bookserver.httpformat.AbstractHttpResult;
 import com.liu.bookserver.httpformat.HttpResult;
 import com.liu.bookserver.httpformat.MsgEnum;
-import com.liu.bookserver.model.Book;
-import com.liu.bookserver.model.BookShelf;
-import com.liu.bookserver.model.Chapter;
-import com.liu.bookserver.model.OrgUser;
+import com.liu.bookserver.model.*;
 import com.liu.bookserver.service.BookService;
 import com.liu.bookserver.utils.UUIDTool;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +34,8 @@ public class BookServiceImpl implements BookService {
     private BookShelfDao bookShelfDao;
     @Autowired
     private ChapterDao chapterDao;
+    @Autowired
+    private ReadRecordDao readRecordDao;
 
     @Override
     public HttpResult addBook(Book book) {
@@ -113,5 +113,36 @@ public class BookServiceImpl implements BookService {
             return HttpResult.fail(MsgEnum.DATA_DELETE_FAILURE);
         }
         return HttpResult.success(MsgEnum.DATA_DELETE_SUCCESS);
+    }
+
+    @Override
+    public HttpResult addReadRecord(ReadRecord readRecord) {
+        ReadRecord readRecord1 = readRecordDao.getReadRecord(readRecord);
+        if (ObjectUtils.isEmpty(readRecord1)){
+            readRecord.setId(UUIDTool.getUUID());
+            int flag = readRecordDao.addReadRecord(readRecord);
+            if (flag == 0){
+                return HttpResult.fail(MsgEnum.DATA_ADD_FAILURE);
+            }
+            return HttpResult.success(MsgEnum.DATA_ADD_SUCCESS);
+        }else {
+            int flag1 = readRecordDao.editReadRecord(readRecord);
+            if (flag1 == 0){
+                return HttpResult.fail(MsgEnum.DATA_UPDATE_FAILURE);
+            }
+            return HttpResult.success(MsgEnum.DATA_UPDATE_SUCCESS);
+        }
+    }
+
+    @Override
+    public HttpResult getReadRecord(String userid, String bookid) {
+        ReadRecord readRecord = new ReadRecord();
+        readRecord.setUserid(userid);
+        readRecord.setBookid(bookid);
+        ReadRecord readRecord1 = readRecordDao.getReadRecord(readRecord);
+        if (ObjectUtils.isEmpty(readRecord1)){
+            return HttpResult.fail(MsgEnum.DATA_SELECT_FAILURE);
+        }
+        return HttpResult.success(MsgEnum.DATA_SELECT_SUCCESS,readRecord1);
     }
 }

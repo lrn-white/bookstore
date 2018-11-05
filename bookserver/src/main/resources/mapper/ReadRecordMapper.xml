@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liu.bookserver.dao.ReadRecordDao">
+    <resultMap id="BaseResultMap" type="com.liu.bookserver.model.ReadRecord">
+        <id column="rowid" property="rowid" jdbcType="VARCHAR"/>
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="userid" property="userid" jdbcType="VARCHAR"/>
+        <result column="bookid" property="bookid" jdbcType="VARCHAR"/>
+        <result column="chapterid" property="chapterid" jdbcType="VARCHAR"/>
+        <result column="pageNum" property="pageNum" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询阅读记录-->
+    <select id="getReadRecord" resultMap="BaseResultMap">
+        SELECT
+        id,rowid,userid,bookid,chapterid,pageNum
+        FROM
+        readrecord
+        WHERE
+        userid = #{userid}
+        AND
+        bookid = #{bookid}
+    </select>
+
+    <!--新增阅读记录-->
+    <insert id="addReadRecord">
+        INSERT INTO readrecord
+        (userid,bookid,chapterid,pageNum)
+        VALUES
+        (#{userid},#{bookid},#{chapterid},#{pageNum})
+    </insert>
+
+    <!--修改阅读记录-->
+    <update id="editReadRecord">
+        UPDATE readrecord
+        <set>
+            chapterid = #{chapterid} , pageNum = #{pageNum}
+        </set>
+        WHERE
+        userid = #{userid}
+        And
+        bookid = #{bookid}
+    </update>
+</mapper>

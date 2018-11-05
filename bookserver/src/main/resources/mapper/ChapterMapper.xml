@@ -47,6 +47,7 @@
         id = #{id}
     </update>
 
+    <!--删除章节信息-->
     <delete id="delChapter">
         DELETE  FROM chapter
         WHERE

@@ -3,6 +3,7 @@ package com.liu.bookserver.service;
 import com.liu.bookserver.httpformat.HttpResult;
 import com.liu.bookserver.model.Book;
 import com.liu.bookserver.model.Chapter;
+import com.liu.bookserver.model.ReadRecord;
 
 import java.io.IOException;
 
@@ -97,4 +98,27 @@ public interface BookService {
      * @return
      */
     HttpResult delChapter(String id);
+
+    /**
+     * 添加阅读记录（如果没有前置记录就新增，有就修改)
+     * @author : lrn
+     * @createTime : 2018/11/1 9:06
+     * @param readRecord userid 用户id
+     * @param readRecord bookid 书籍id
+     * @param readRecord chapterid 章节id
+     * @param readRecord pageNum 页数
+     * @return
+     */
+    HttpResult addReadRecord(ReadRecord readRecord);
+
+    /**
+     * 查询阅读记录
+     *
+     * @param userid 用户id
+     * @param bookid 书籍id
+     * @return
+     * @author : lrn
+     * @createTime : 2018/11/1 15:00
+     */
+    HttpResult getReadRecord(String userid,String bookid);
 }

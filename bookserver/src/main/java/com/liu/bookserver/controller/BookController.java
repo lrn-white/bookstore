@@ -2,10 +2,7 @@ package com.liu.bookserver.controller;
 
 import com.liu.bookserver.httpformat.HttpResult;
 import com.liu.bookserver.httpformat.MsgEnum;
-import com.liu.bookserver.model.Book;
-import com.liu.bookserver.model.Chapter;
-import com.liu.bookserver.model.add;
-import com.liu.bookserver.model.edit;
+import com.liu.bookserver.model.*;
 import com.liu.bookserver.service.BookService;
 import com.netflix.ribbon.proxy.annotation.Http;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.POST;
 import java.io.IOException;
 
@@ -115,15 +113,16 @@ public class BookController {
 
     /**
      * 添加章节信息
-     * @author : lrn
-     * @createTime : 2018/10/31 17:19
+     *
      * @param chapter bookid 书籍id
      * @param chapter cname 章节名
      * @param chapter cprice 章节单价
      * @return
+     * @author : lrn
+     * @createTime : 2018/10/31 17:19
      */
     @PostMapping("/addChapter")
-    private HttpResult addChapter(@Validated({add.class}) Chapter chapter,BindingResult result){
+    private HttpResult addChapter(@Validated({add.class}) Chapter chapter, BindingResult result) {
         if (result.hasErrors()) {
             return HttpResult.fail(result.getFieldError().getDefaultMessage());
         }
@@ -132,15 +131,16 @@ public class BookController {
 
     /**
      * 修改章节信息
-     * @author : lrn
-     * @createTime : 2018/10/31 17:29
+     *
      * @param chapter id 章节id
      * @param chapter cname 章节名
      * @param chapter cprice 单价
      * @return
+     * @author : lrn
+     * @createTime : 2018/10/31 17:29
      */
     @PostMapping("/editChapter")
-    private HttpResult editChapter(@Validated({edit.class}) Chapter chapter,BindingResult result){
+    private HttpResult editChapter(@Validated({edit.class}) Chapter chapter, BindingResult result) {
         if (result.hasErrors()) {
             return HttpResult.fail(result.getFieldError().getDefaultMessage());
         }
@@ -149,13 +149,48 @@ public class BookController {
 
     /**
      * 删除章节信息
+     *
+     * @param id 章节id
+     * @return
      * @author : lrn
      * @createTime : 2018/10/31 19:33
-     * @param id 章节id
-     * @return       
      */
     @GetMapping("/delChapter")
-    private HttpResult delChapter(@NotBlank(message = "id不能为空") String id){
+    private HttpResult delChapter(@NotBlank(message = "id不能为空") String id) {
         return bookService.delChapter(id);
+    }
+
+    /**
+     * 添加阅读记录（如果没有前置记录就新增，有就修改)
+     *
+     * @param readRecord userid 用户id
+     * @param readRecord bookid 书籍id
+     * @param readRecord chapterid 章节id
+     * @param readRecord pageNum 页数
+     * @return
+     * @author : lrn
+     * @createTime : 2018/11/1 9:06
+     */
+    @PostMapping("/addReadRecord")
+    private HttpResult addReadRecord(@Validated(add.class) ReadRecord readRecord, BindingResult result) {
+        if (result.hasErrors()) {
+            return HttpResult.fail(result.getFieldError().getDefaultMessage());
+        }
+        return bookService.addReadRecord(readRecord);
+    }
+
+    /**
+     * 查询阅读记录
+     *
+     * @param userid 用户id
+     * @param bookid 书籍id
+     * @return
+     * @author : lrn
+     * @createTime : 2018/11/1 15:00
+     */
+    @GetMapping("/getReadRecord")
+    private HttpResult getReadRecord(@NotBlank(message = "用户id不能为空") String userid,
+                                     @NotBlank(message = "书籍id不能为空") String bookid) {
+        return bookService.getReadRecord(userid, bookid);
     }
 }
