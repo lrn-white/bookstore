@@ -3,7 +3,6 @@ package com.liu.userserver.service.serviceimpl;
 import com.liu.userserver.dao.UserDao;
 import com.liu.userserver.httpformat.HttpResult;
 import com.liu.userserver.httpformat.MsgEnum;
-import com.liu.userserver.httpformat.MsgInterface;
 import com.liu.userserver.model.OrgUser;
 import com.liu.userserver.service.UserService;
 import com.liu.userserver.utils.UUIDTool;

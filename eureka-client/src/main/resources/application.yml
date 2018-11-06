@@ -11,13 +11,3 @@ eureka:
 spring:
   application:
     name: eureka-client
-  cloud:
-      config:
-        server:
-          git:
-            uri: https://gitee.com/qianxunclub/spring-boot-config-repo
-#            username: lrn-white
-#            password: 19960614asd
-            search-paths: /**
-            basedir: target/config
-            default-label: master
