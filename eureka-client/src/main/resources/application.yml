@@ -15,8 +15,9 @@ spring:
       config:
         server:
           git:
-            uri: https://github.com/lrn-white/bookstore
-            username: lrn-white
-            password: 19960614asd
-            search-paths: src/main/resources
-        label: master
+            uri: https://gitee.com/qianxunclub/spring-boot-config-repo
+#            username: lrn-white
+#            password: 19960614asd
+            search-paths: /**
+            basedir: target/config
+            default-label: master
