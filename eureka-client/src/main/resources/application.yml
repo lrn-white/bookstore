@@ -11,3 +11,12 @@ eureka:
 spring:
   application:
     name: eureka-client
+  cloud:
+      config:
+        server:
+          git:
+            uri: https://github.com/lrn-white/bookstore/
+            search-paths: eureka-client/src/main/resources
+            username: lrn-white
+            password: 19960614asd
+        label: master
