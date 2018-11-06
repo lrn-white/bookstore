@@ -25,9 +25,9 @@
     <!--新增阅读记录-->
     <insert id="addReadRecord">
         INSERT INTO readrecord
-        (userid,bookid,chapterid,pageNum)
+        (id,userid,bookid,chapterid,pageNum)
         VALUES
-        (#{userid},#{bookid},#{chapterid},#{pageNum})
+        (#{id},#{userid},#{bookid},#{chapterid},#{pageNum})
     </insert>
 
     <!--修改阅读记录-->

@@ -1,7 +1,8 @@
-package com.liu.bookserver.service.serviceimpl;
+package com.liu.bookserver.service;
 
 import com.liu.bookserver.httpformat.HttpResult;
 import com.liu.bookserver.model.OrgUser;
+import com.liu.bookserver.utils.UserServerHystrix;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author lrn
  * @createTime : 2018/10/30 10:07
  */
-@FeignClient(value = "userserver")
+@FeignClient(value = "userserver",fallback = UserServerHystrix.class)
 public interface UserServiceServer {
 
     /**

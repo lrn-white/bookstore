@@ -1,16 +1,14 @@
 package com.liu.bookserver.service.serviceimpl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonArrayFormatVisitor;
 import com.liu.bookserver.dao.BookDao;
 import com.liu.bookserver.dao.BookShelfDao;
 import com.liu.bookserver.dao.ChapterDao;
 import com.liu.bookserver.dao.ReadRecordDao;
-import com.liu.bookserver.httpformat.AbstractHttpResult;
 import com.liu.bookserver.httpformat.HttpResult;
 import com.liu.bookserver.httpformat.MsgEnum;
 import com.liu.bookserver.model.*;
 import com.liu.bookserver.service.BookService;
+import com.liu.bookserver.service.UserServiceServer;
 import com.liu.bookserver.utils.UUIDTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,8 +66,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public HttpResult addCollection(String userid, String bookid) throws IOException {
+    public HttpResult addCollection(String userid, String bookid){
         HttpResult httpResult = userServiceServer.getUser(userid);
+//        判断是否成功连接用户服务
+        if (!httpResult.isSuccess()){
+            return httpResult;
+        }
+
         Map<String,Object> map  = httpResult.getData();
 
         BookShelf bookShelf = new BookShelf();
