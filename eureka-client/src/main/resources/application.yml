@@ -15,8 +15,8 @@ spring:
       config:
         server:
           git:
-            uri: https://github.com/lrn-white/bookstore/
-            search-paths: eureka-client/src/main/resources
+            uri: https://github.com/lrn-white/bookstore
             username: lrn-white
             password: 19960614asd
+            search-paths: src/main/resources
         label: master

@@ -10,3 +10,4 @@ spring:
   feign:
     hystrix:
       enabled: true
+foo: foo version 3
