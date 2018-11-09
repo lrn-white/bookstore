@@ -1,7 +1,12 @@
-test: test-dev
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: 123456
     url: jdbc:mysql://localhost:3306/bookstore?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false
+mybatis:
+  mapper-locations: classpath*:mapper/**Mapper.xml
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
