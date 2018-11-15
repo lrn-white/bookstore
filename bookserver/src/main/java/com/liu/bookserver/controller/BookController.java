@@ -4,6 +4,7 @@ import com.liu.bookserver.httpformat.HttpResult;
 import com.liu.bookserver.httpformat.MsgEnum;
 import com.liu.bookserver.model.*;
 import com.liu.bookserver.service.BookService;
+import com.liu.bookserver.utils.UUIDTool;
 import com.netflix.ribbon.proxy.annotation.Http;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
@@ -18,6 +19,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.POST;
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author lrn
@@ -193,4 +198,5 @@ public class BookController {
                                      @NotBlank(message = "书籍id不能为空") String bookid) {
         return bookService.getReadRecord(userid, bookid);
     }
+
 }
